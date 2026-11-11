@@ -1,0 +1,9 @@
+/target
+/dist
+/modem.ini
+/modem-reset.log
+# 1.x 资料只留本地：含真实密码和厂商页面源码，不随仓库发布
+/dump/
+/legacy/
+*.pyc
+__pycache__/

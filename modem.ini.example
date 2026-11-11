@@ -1,0 +1,32 @@
+; modem.ini —— 复制本文件为 modem.ini 后填写
+;
+; 格式约定：
+;   * [section] 分段，key = value 赋值
+;   * ; 或 # 开头的整行是注释（不支持行尾注释，URL 里有 = ? ; 会被误伤）
+;   * 只按第一个 = 切分，所以 url 里的 = 不用转义
+;   * 环境变量优先级高于本文件：ONT_PASS / ROUTER_PASS / ONT_HOST 等
+
+[ont]
+host      = 192.168.1.1
+username  = useradmin
+password  =
+; 密码也可以不写在这里，改用环境变量 ONT_PASS（计划任务里更安全）
+timeout   = 8
+retries   = 3
+
+[router]
+host      = 192.168.31.1
+password  =
+; 小米路由管理密码，通常等于 WiFi 密码；不用路由器功能可留空
+
+[reboot]
+; 光猫重启入口。_SESSION_TOKEN 与登录会话绑定，由程序每次执行时现抓，不要写死
+url       = /getpage.gch?pid=1002&nextpage=manager_dev_conf_t_user.gch
+method    = POST
+; 安全闸门：必须显式改成 yes，否则 --execute 也会被拒绝
+confirmed = no
+
+[reboot.fields]
+; 固定表单字段，执行时优先级高于页面隐藏域（token 除外）
+IF_ACTION = devrestart
+flag      = 1
